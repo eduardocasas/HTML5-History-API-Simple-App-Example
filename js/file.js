@@ -1,0 +1,33 @@
+$(document).ready
+(
+    function ()
+    {
+        $('nav').on
+        (
+            'click',
+            'a',
+            function(event)
+            {
+                event.preventDefault();
+                window.history.pushState(null, null, $(this).attr('href'));
+                $('nav').load('views/'+$(this).attr('href')+'.html');
+                $('span').text(window.history.length);
+            }
+        );
+        $('#previous').click
+        (
+            function()
+            {
+                window.history.back();
+            }
+        );
+        $('#forward').click
+        (
+            function()
+            {
+                window.history.forward();
+            }
+        );
+        $('span').text(window.history.length);
+	}
+);
