@@ -2,6 +2,14 @@ $(document).ready
 (
     function ()
     {
+        function loadView(view)
+        {
+            $('nav').load('views/'+view+'.html');
+        }
+        window.onpopstate = function(event)
+        {
+            loadView(event.state);
+        };
         $('nav').on
         (
             'click',
@@ -9,8 +17,9 @@ $(document).ready
             function(event)
             {
                 event.preventDefault();
-                window.history.pushState(null, null, $(this).attr('href'));
-                $('nav').load('views/'+$(this).attr('href')+'.html');
+                var view = $(this).attr('href');
+                window.history.pushState(view, null, view);
+                loadView(view);
                 $('span').text(window.history.length);
             }
         );
