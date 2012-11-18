@@ -43,12 +43,7 @@ $(document).ready
         printHistoryLength();
         window.onpopstate = function(event)
         {
-            if (event.state == null) {
-                state = $('strong').text();
-            } else {
-                state = event.state;
-            }
-            loadView(state);
+            loadView(window.history.state);
         };
 	}
 );
