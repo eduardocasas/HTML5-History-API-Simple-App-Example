@@ -22,7 +22,7 @@ $(document).ready
         }
         function printHistoryLength()
         {
-            $('span').text(window.history.length-1);
+            $('span').text(window.history.length);
         }
         $('nav').on
         (
@@ -39,7 +39,7 @@ $(document).ready
                 }
             }
         );
-        window.history.pushState($('strong').text(), null, $('strong').text());
+        window.history.replaceState($('strong').text(), null, $('strong').text());
         printHistoryLength();
         window.onpopstate = function(event)
         {
