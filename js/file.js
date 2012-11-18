@@ -2,27 +2,6 @@ $(document).ready
 (
     function ()
     {
-        function loadView(view)
-        {
-            $('nav').load('views/'+view+'.html');
-        }
-        window.onpopstate = function(event)
-        {
-            loadView(event.state);
-        };
-        $('nav').on
-        (
-            'click',
-            'a',
-            function(event)
-            {
-                event.preventDefault();
-                var view = $(this).attr('href');
-                window.history.pushState(view, null, view);
-                loadView(view);
-                $('span').text(window.history.length);
-            }
-        );
         $('#previous').click
         (
             function()
@@ -37,6 +16,39 @@ $(document).ready
                 window.history.forward();
             }
         );
-        $('span').text(window.history.length);
+        function loadView(view)
+        {
+            $('nav').load('views/'+view+'.html');
+        }
+        function printHistoryLength()
+        {
+            $('span').text(window.history.length-1);
+        }
+        $('nav').on
+        (
+            'click',
+            'a',
+            function(event)
+            {
+                if (typeof window.history.pushState == 'function') {
+                    event.preventDefault();
+                    var view = $(this).attr('href');
+                    window.history.pushState(view, null, view);
+                    loadView(view);
+                    printHistoryLength();
+                }
+            }
+        );
+        window.history.pushState($('strong').text(), null, $('strong').text());
+        printHistoryLength();
+        window.onpopstate = function(event)
+        {
+            if (event.state == null) {
+                state = $('strong').text();
+            } else {
+                state = event.state;
+            }
+            loadView(state);
+        };
 	}
 );
